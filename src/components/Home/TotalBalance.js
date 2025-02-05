@@ -61,7 +61,7 @@ export default class TotalBalance extends Component {
                 style={styles.iconLeft}
               />
               <View style={styles.transactionInfo}>
-                <Text style={styles.labelText}>Revenu</Text>
+                <Text style={styles.labelText}>Income</Text>
                 <Text style={styles.balanceText}>0,00</Text>
               </View>
             </TouchableOpacity>
@@ -78,7 +78,7 @@ export default class TotalBalance extends Component {
                 style={styles.iconLeft}
               />
               <View style={styles.transactionInfo}>
-                <Text style={styles.labelText}>Dépense</Text>
+                <Text style={styles.labelText}>Expense</Text>
                 <Text style={styles.balanceText}>0,00</Text>
               </View>
             </TouchableOpacity>
@@ -101,13 +101,13 @@ const styles = StyleSheet.create({
   content: {
     backgroundColor: Colors.BlancFond,
     width: '90%',
-    height: 200,
+    height: 225,
     borderRadius: 12,
     paddingHorizontal: 20,
     paddingVertical: 30,
     justifyContent: 'center',
     position: 'absolute',
-    bottom: -90,
+    bottom: -100,
     shadowColor: '#000',
     shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 2 },

@@ -2,6 +2,7 @@ export default{
     Vert : '#4CAF50',
     Rouge: '#F44336',
     JauneOriginal : '#FFC107',
+    Gris: '#f2f2f2',
     GrisNeutre : '#E0E0E0',
     BorderGris: '#ccc',
     white: '#FFF',

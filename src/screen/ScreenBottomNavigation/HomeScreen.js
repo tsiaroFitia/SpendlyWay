@@ -24,6 +24,6 @@ const styles = StyleSheet.create({
     
   },
   content:{
-    top:'27%',
+    top:'30%',
   },
 })
