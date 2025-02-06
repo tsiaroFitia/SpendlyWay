@@ -46,8 +46,8 @@ const TabBottom = () => {
           return <Ionicons name={iconName} size={28} color={color} />;
         },
         tabBarStyle: styles.tabBarStyle,
-        tabBarActiveTintColor: Colors.JauneFoncé, // Couleur active des icônes
-        tabBarInactiveTintColor: 'gray', // Couleur inactive des icônes
+        tabBarActiveTintColor: Colors.JauneFoncé, // Couleur active des icônes HITA
+        tabBarInactiveTintColor: 'gray', // Couleur inactive des icônes 
         tabBarLabelStyle: { display: 'none' }, // Cacher les labels sous les icônes
       })}
     >
