@@ -7,9 +7,10 @@ import Colors from '../../outils/Colors';
 
 export default class HeaderHomeScreen extends Component {
   render() {
+    const { title } = this.props; // Extraction de la prop title
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Your Pocket Account</Text>
+        <Text style={styles.text}>{title}</Text>
         <TouchableOpacity>
             <View style={styles.iconContainer}>
                <Ionicons name="list" size={30} style={styles.icon} />

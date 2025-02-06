@@ -9,7 +9,7 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <HeaderHomeScreen/>
+        <HeaderHomeScreen title="Your Pocket Account."/>
         <TotalBalance/>
         <ScrollView style={styles.content}>
             <Text>Home</Text>
