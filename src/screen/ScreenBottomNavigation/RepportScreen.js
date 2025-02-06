@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.BlancFond,
   },
   headerContainer: {
-    // Style du header si besoin
+    
   },
   tabBarContainer: {
     flex: 1,  // Pour occuper l'espace restant sous le header
@@ -78,14 +78,14 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   tabBarLabelStyle: {
-    fontSize: 14, // Ajuste la taille des labels des onglets
+    fontSize: 14,
   },
   tabLabelContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   tabLabel: {
-    marginLeft: 5,  // Espacement entre l'icône et le texte
-    fontSize: 16,   // Taille du texte
+    marginLeft: 5,  
+    fontSize: 16,   
   },
 });
