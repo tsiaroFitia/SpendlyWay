@@ -3,31 +3,31 @@ import { View, Text, TextInput, TouchableOpacity, Modal, StyleSheet } from 'reac
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../outils/Colors';
 
-export default class ModalAddWallet extends Component {
+export default class ModalEditWallet extends Component {
   state = {
-    amount: '',
-    date: '',
-    description: '',
+    amount: this.props.amount || '',
+    date: this.props.date || '',
+    description: this.props.description || '',
   };
 
-  handleAddWallet = () => {
+  handleEditWallet = () => {
     const { amount, date, description } = this.state;
-    // Logique pour ajouter le portefeuille
-    console.log('Added Wallet:', { amount, date, description });
-    this.props.closeModal(); // Ferme le modal après l'ajout
+    console.log('Edited Wallet:', { amount, date, description });
+    this.props.closeModal();
   };
 
   render() {
     const { modalVisible, closeModal } = this.props;
+
     return (
       <Modal transparent={true} visible={modalVisible} animationType="fade">
         <View style={styles.overlay}>
           <View style={styles.modalContainer}>
-            <Text style={styles.modalTitle}>Add Wallet Entry</Text>
+            <Text style={styles.modalTitle}>Edit Wallet</Text>
 
             {/* Montant */}
             <View style={styles.inputContainer}>
-              <Ionicons name="cash-outline" size={24} color={Colors.BleuFoncé} style={styles.icon} />
+              <Ionicons name="wallet-outline" size={20} color={Colors.BleuFoncé} />
               <TextInput
                 style={styles.input}
                 placeholder="Enter Amount"
@@ -39,10 +39,10 @@ export default class ModalAddWallet extends Component {
 
             {/* Date */}
             <View style={styles.inputContainer}>
-              <Ionicons name="calendar-outline" size={24} color={Colors.BleuFoncé} style={styles.icon} />
+              <Ionicons name="calendar-outline" size={20} color={Colors.BleuFoncé} />
               <TextInput
                 style={styles.input}
-                placeholder="Enter Date (DD/MM/YYYY)"
+                placeholder="Enter Date"
                 value={this.state.date}
                 onChangeText={(text) => this.setState({ date: text })}
               />
@@ -50,7 +50,7 @@ export default class ModalAddWallet extends Component {
 
             {/* Description */}
             <View style={styles.inputContainer}>
-              <Ionicons name="document-text-outline" size={24} color={Colors.BleuFoncé} style={styles.icon} />
+              <Ionicons name="document-text-outline" size={20} color={Colors.BleuFoncé} />
               <TextInput
                 style={styles.input}
                 placeholder="Enter Description"
@@ -60,12 +60,12 @@ export default class ModalAddWallet extends Component {
             </View>
 
             {/* Boutons */}
-            <View style={styles.buttonsContainer}>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.button} onPress={this.handleEditWallet}>
+                <Text style={styles.buttonText}>Edit</Text>
+              </TouchableOpacity>
               <TouchableOpacity style={styles.cancelButton} onPress={closeModal}>
                 <Text style={styles.buttonText}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.addButton} onPress={this.handleAddWallet}>
-                <Text style={styles.buttonText}>Add</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -90,8 +90,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 18,
     marginBottom: 20,
   },
   inputContainer: {
@@ -100,33 +99,31 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.BleuFoncé,
     borderRadius: 5,
-    paddingHorizontal: 10,
+    padding: 8,
     marginBottom: 15,
     width: '100%',
   },
-  icon: {
-    marginRight: 10,
-  },
   input: {
     flex: 1,
-    paddingVertical: 8,
+    paddingLeft: 10,
+    fontSize: 16,
   },
-  buttonsContainer: {
+  buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+  },
+  button: {
+    backgroundColor: Colors.JauneFoncé,
+    padding: 10,
+    borderRadius: 5,
+    width: '45%',
   },
   cancelButton: {
     backgroundColor: 'gray',
     padding: 10,
     borderRadius: 5,
-    width: '48%',
-  },
-  addButton: {
-    backgroundColor: Colors.JauneFoncé,
-    padding: 10,
-    borderRadius: 5,
-    width: '48%',
+    width: '45%',
   },
   buttonText: {
     color: Colors.BleuFoncé,
