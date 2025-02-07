@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   modalBackground: {
     flex: 1,
-    backgroundColor: Colors.BlancFond,
+    backgroundColor: Colors.BackGroundModal,
     justifyContent: 'center',
     alignItems: 'center',
   },

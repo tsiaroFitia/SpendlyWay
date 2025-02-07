@@ -12,13 +12,17 @@ export default class ModalAddWallet extends Component {
 
   handleAddWallet = () => {
     const { amount, date, description } = this.state;
-    // Logique pour ajouter le portefeuille
+    // eto ny Logique pour ajouter le portefeuille
     console.log('Added Wallet:', { amount, date, description });
-    this.props.closeModal(); // Ferme le modal après l'ajout
+    this.props.closeAddModal(); // Ferme le modal après l'ajout
   };
+  closeAddModal = () => {
+    this.setState({ modalVisible: false });
+  };
+  
 
   render() {
-    const { modalVisible, closeModal } = this.props;
+    const { modalVisible, closeAddModal } = this.props;
     return (
       <Modal transparent={true} visible={modalVisible} animationType="fade">
         <View style={styles.overlay}>
@@ -61,12 +65,14 @@ export default class ModalAddWallet extends Component {
 
             {/* Boutons */}
             <View style={styles.buttonsContainer}>
-              <TouchableOpacity style={styles.cancelButton} onPress={closeModal}>
-                <Text style={styles.buttonText}>Cancel</Text>
+                <TouchableOpacity style={styles.cancelButton} onPress={closeAddModal}>
+                <Text style={styles.buttonText1}>Cancel</Text>
               </TouchableOpacity>
+            
               <TouchableOpacity style={styles.addButton} onPress={this.handleAddWallet}>
                 <Text style={styles.buttonText}>Add</Text>
               </TouchableOpacity>
+              
             </View>
           </View>
         </View>
@@ -80,10 +86,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: Colors.BackGroundModal,
   },
   modalContainer: {
-    width: 300,
+    width: '80%',
     padding: 20,
     backgroundColor: '#fff',
     borderRadius: 10,
@@ -91,8 +97,9 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 20,
+    color:Colors.BleuFoncé,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -101,11 +108,12 @@ const styles = StyleSheet.create({
     borderColor: Colors.BleuFoncé,
     borderRadius: 5,
     paddingHorizontal: 10,
-    marginBottom: 15,
+    marginBottom: 25,
     width: '100%',
+    height:50,
   },
   icon: {
-    marginRight: 10,
+    marginRight: 15,
   },
   input: {
     flex: 1,
@@ -117,7 +125,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   cancelButton: {
-    backgroundColor: 'gray',
+    backgroundColor: 'white',
+    borderWidth:1,
+    borderColor:Colors.JauneFoncé,
     padding: 10,
     borderRadius: 5,
     width: '48%',
@@ -128,8 +138,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: '48%',
   },
+  buttonText1: {
+    color: Colors.JauneFoncé,
+    textAlign: 'center',
+    fontSize: 16,
+  },
   buttonText: {
-    color: Colors.BleuFoncé,
+    color: Colors.white,
     textAlign: 'center',
     fontSize: 16,
   },

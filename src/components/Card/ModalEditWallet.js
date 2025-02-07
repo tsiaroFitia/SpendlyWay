@@ -13,11 +13,15 @@ export default class ModalEditWallet extends Component {
   handleEditWallet = () => {
     const { amount, date, description } = this.state;
     console.log('Edited Wallet:', { amount, date, description });
-    this.props.closeModal();
+    this.props.closeEditModal();
+  };
+
+  closeEditModal = () => {
+    this.setState({ modalVisible: false });
   };
 
   render() {
-    const { modalVisible, closeModal } = this.props;
+    const { modalVisible, closeEditModal } = this.props;
 
     return (
       <Modal transparent={true} visible={modalVisible} animationType="fade">
@@ -48,24 +52,14 @@ export default class ModalEditWallet extends Component {
               />
             </View>
 
-            {/* Description */}
-            <View style={styles.inputContainer}>
-              <Ionicons name="document-text-outline" size={20} color={Colors.BleuFoncé} />
-              <TextInput
-                style={styles.input}
-                placeholder="Enter Description"
-                value={this.state.description}
-                onChangeText={(text) => this.setState({ description: text })}
-              />
-            </View>
-
             {/* Boutons */}
             <View style={styles.buttonContainer}>
+             
+              <TouchableOpacity style={styles.cancelButton} onPress={closeEditModal}>
+                <Text style={styles.buttonText1}>Cancel</Text>
+              </TouchableOpacity>
               <TouchableOpacity style={styles.button} onPress={this.handleEditWallet}>
                 <Text style={styles.buttonText}>Edit</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.cancelButton} onPress={closeModal}>
-                <Text style={styles.buttonText}>Cancel</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -83,7 +77,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContainer: {
-    width: 300,
+    width: '80%',
     padding: 20,
     backgroundColor: '#fff',
     borderRadius: 10,
@@ -92,6 +86,8 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 18,
     marginBottom: 20,
+    fontWeight:'bold',
+    color:Colors.BleuFoncé,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -100,7 +96,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.BleuFoncé,
     borderRadius: 5,
     padding: 8,
-    marginBottom: 15,
+    marginBottom: 20,
     width: '100%',
   },
   input: {
@@ -120,14 +116,20 @@ const styles = StyleSheet.create({
     width: '45%',
   },
   cancelButton: {
-    backgroundColor: 'gray',
+    borderColor: Colors.JauneFoncé,
+    borderWidth:1,
     padding: 10,
     borderRadius: 5,
     width: '45%',
   },
-  buttonText: {
-    color: Colors.BleuFoncé,
-    textAlign: 'center',
-    fontSize: 16,
-  },
+   buttonText1: {
+      color: Colors.JauneFoncé,
+      textAlign: 'center',
+      fontSize: 16,
+    },
+    buttonText: {
+      color: Colors.white,
+      textAlign: 'center',
+      fontSize: 16,
+    },
 });

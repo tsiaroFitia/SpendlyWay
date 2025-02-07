@@ -86,7 +86,10 @@ export default class Wallet extends Component {
           transparent={true}
           onRequestClose={this.closeAddModal}
         >
-          <ModalAddWallet onClose={this.closeAddModal} />
+            <ModalAddWallet 
+                modalVisible={isAddModalVisible}
+                closeAddModal={this.closeAddModal}
+             />
         </Modal>
 
         {/* Edit Wallet Modal */}
@@ -96,7 +99,10 @@ export default class Wallet extends Component {
           transparent={true}
           onRequestClose={this.closeEditModal}
         >
-          <ModalEditWallet onClose={this.closeEditModal} />
+            <ModalEditWallet 
+                modalVisible={isEditModalVisible}
+                closeEditModal={this.closeEditModal}
+            />
         </Modal>
       </View>
     );

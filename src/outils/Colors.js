@@ -17,5 +17,6 @@ export default{
     BleuFoncé : '#1565C0',
     BleuTranslucide : 'rgba(33, 150, 243, 0.6)',
     BleuNuit : '#0D47A1',
+    BackGroundModal:'rgba(0, 0, 0, 0.5)',
 
 };

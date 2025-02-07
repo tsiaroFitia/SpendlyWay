@@ -84,7 +84,7 @@ export default class ModalAddTransaction extends Component {
             style={[styles.button, styles.cancelButton]}
             onPress={this.props.onClose}
           >
-            <Ionicons name="close-circle-outline" size={24} color={Colors.JauneFoncé} style={{ paddingRight: 10,}}/>
+            
             <Text style={[styles.buttonTextCancel, { color: Colors.JauneFoncé }]}>Cancel</Text>
           </TouchableOpacity>
 
@@ -92,7 +92,7 @@ export default class ModalAddTransaction extends Component {
             style={[styles.button, transactionType === 'Income' ? styles.buttonGreen : styles.buttonRed]}
             onPress={this.handleAddTransaction}
           >
-            <Ionicons name="checkmark-circle-outline" size={24} color={transactionType === 'Income' ? Colors.Vert : Colors.Rouge} style={{ paddingRight: 5,}}/>
+            
             <Text style={[styles.buttonText, { color: transactionType === 'Income' ? Colors.Vert : Colors.Rouge }]}>Valid</Text>
           </TouchableOpacity>
         </View>
@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,
+    marginBottom:15,
   },
   button: {
     flexDirection: 'row',
