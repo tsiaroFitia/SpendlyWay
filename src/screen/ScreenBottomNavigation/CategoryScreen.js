@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     // Personnalise la zone du header si nécessaire
   },
   tabBarContainer: {
-    flex: 1,  // Pour occuper l'espace restant sous le header
+    flex: 1,
   },
   tabBarStyle: {
     backgroundColor: Colors.white,
