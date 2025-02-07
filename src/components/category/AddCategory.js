@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../outils/Colors';
 import ModalAddCategory from './ModalAddCategory';
 
@@ -23,7 +24,13 @@ export default class AddCategory extends Component {
       <View style={styles.container}>
         <View style={styles.headercontent}>
           <TouchableOpacity style={styles.button} onPress={this.openFormModal}>
-            <Text style={styles.buttonText}>New Category</Text>
+                <Ionicons
+                      name="add-circle-outline"
+                      size={24}
+                      color={Colors.BleuFoncé}
+                      style={{ marginLeft: 10 }}
+                />
+                <Text style={styles.buttonText}>Add</Text>
           </TouchableOpacity>
         </View>
 
@@ -43,18 +50,18 @@ const styles = StyleSheet.create({
   headercontent: {
     flexDirection: 'row',
   },
-  button: {
-    width: '42%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: Colors.JauneFoncé,
-    padding: 10,
-    borderRadius: 10,
-    margin: 5,
-  },
-  buttonText: {
-    fontSize: 16,
-    color: Colors.BleuFoncé,
-    textAlign: 'center',
-  },
+ button: {
+     width: '42%',
+     flexDirection: 'row',
+     alignItems: 'center',
+     backgroundColor: Colors.JauneFoncé,
+     padding: 10,
+     borderRadius: 10,
+     margin: 5,
+   },
+   buttonText: {
+     fontSize: 16,
+     color: Colors.BleuFoncé,
+     marginLeft: 15,
+   },
 });

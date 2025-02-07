@@ -14,11 +14,6 @@ const icons = [
   'pizza-outline', 'shirt-outline', 'videocam-outline',
   'card-outline', 'car-outline', 'shield-checkmark-outline',
   'calendar-outline', 'stats-chart-outline', 'school-outline', 'leaf-outline',
-
-  'home-outline', 'briefcase-outline', 'rocket-outline',
-  'trophy-outline', 'gift-outline', 'people-outline', 'fast-food-outline',
-  'pizza-outline', 'shirt-outline', 'videocam-outline',
-  'card-outline', 'car-outline', 'shield-checkmark-outline',
 ];
 
 export default class Icone extends Component {
