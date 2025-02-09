@@ -4,16 +4,20 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../../outils/Colors';
 
 const icons = [
-  'medkit-outline', 'heart-outline', 'bandage-outline',
-  'thermometer-outline', 'pulse-outline', 'eyedrop-outline',
+  'medkit-outline', 'pizza-outline','heart-outline', 'desktop-outline',
+  'gift-outline','game-controller-outline','ice-cream-outline','bandage-outline',
+  'thermometer-outline', 'pulse-outline', 'restaurant-outline','eyedrop-outline',
   'water-outline', 'fitness-outline', 'cafe-outline', 'cart-outline',
   'pricetag-outline', 'cut-outline', 'tv-outline', 'bus-outline',
-  'flame-outline', 'cash-outline', 'wallet-outline',
-  'home-outline', 'briefcase-outline', 'rocket-outline',
-  'trophy-outline', 'gift-outline', 'people-outline', 'fast-food-outline',
-  'pizza-outline', 'shirt-outline', 'videocam-outline',
+  'flame-outline', 'cash-outline', 'wallet-outline','image-outline',
+  'logo-bitcoin','logo-facebook','moon-outline',
+  'home-outline', 'briefcase-outline',,'rainy-outline', 'rocket-outline','bed-outline',
+  'boat-sharp','beer-outline','bug-outline','trophy-outline', 'gift-outline',
+  'call-outline','car-sport-outline','diamond-outline','people-outline', 'fast-food-outline',
+  'musical-notes-outline', 'shirt-outline', 'videocam-outline',
   'card-outline', 'car-outline', 'shield-checkmark-outline',
   'calendar-outline', 'stats-chart-outline', 'school-outline', 'leaf-outline',
+  'heart-outline','headset-outline','happy-outline','cog',
 ];
 
 export default class Icone extends Component {
@@ -59,7 +63,7 @@ const styles = StyleSheet.create({
     height: 55,
   },
   headertitle: {
-    fontSize: 18, // Ajuste la taille du texte pour le rendre plus uniforme
+    fontSize: 18,
     fontWeight: 'bold',
     color: Colors.BleuFoncé,
   },
@@ -69,8 +73,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   item: {
-    width: 40,  // Taille similaire à celle du bouton dans ModalAddCategory
-    height: 40,  // Taille uniforme
+    width: 40,  
+    height: 40,
     borderRadius: 20,
     backgroundColor: Colors.BleuClair,
     alignItems: 'center',
