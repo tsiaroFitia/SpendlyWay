@@ -49,7 +49,7 @@ const RepportScreen = () => {
                 </View>
               );
             },
-            tabBarActiveTintColor: Colors.Vert, // Par défaut pour Income
+            tabBarActiveTintColor: Colors.Vert,
             tabBarInactiveTintColor: "gray",
             tabBarStyle: styles.tabBarStyle,
             tabBarLabelStyle: styles.tabBarLabelStyle,
