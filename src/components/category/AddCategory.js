@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import Colors from '../../outils/Colors';
-import ModalAddCategory from './ModalAddCategory';
+import React, { Component } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import Colors from "../../outils/Colors";
+import ModalAddCategory from "./ModalAddCategory";
 
 export default class AddCategory extends Component {
   state = {
@@ -24,18 +24,21 @@ export default class AddCategory extends Component {
       <View style={styles.container}>
         <View style={styles.headercontent}>
           <TouchableOpacity style={styles.button} onPress={this.openFormModal}>
-                <Ionicons
-                      name="add-circle-outline"
-                      size={24}
-                      color={Colors.BleuFoncé}
-                      style={{ marginLeft: 10 }}
-                />
-                <Text style={styles.buttonText}>Add</Text>
+            <Ionicons
+              name="add-circle-outline"
+              size={24}
+              color={Colors.BleuFoncé}
+              style={{ marginLeft: 10 }}
+            />
+            <Text style={styles.buttonText}>Add</Text>
           </TouchableOpacity>
         </View>
 
         {/* ModalAddCategory */}
-        <ModalAddCategory modalVisible={modalVisible} onCloseModal={this.closeFormModal} />
+        <ModalAddCategory
+          modalVisible={modalVisible}
+          onCloseModal={this.closeFormModal}
+        />
       </View>
     );
   }
@@ -43,25 +46,24 @@ export default class AddCategory extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
     padding: 16,
   },
   headercontent: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
- button: {
-     width: '42%',
-     flexDirection: 'row',
-     alignItems: 'center',
-     backgroundColor: Colors.JauneFoncé,
-     padding: 10,
-     borderRadius: 10,
-     margin: 5,
-   },
-   buttonText: {
-     fontSize: 16,
-     color: Colors.BleuFoncé,
-     marginLeft: 15,
-   },
+  button: {
+    width: "42%",
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: Colors.JauneFoncé,
+    padding: 10,
+    borderRadius: 10,
+    margin: 5,
+  },
+  buttonText: {
+    fontSize: 16,
+    color: Colors.BleuFoncé,
+    marginLeft: 15,
+  },
 });
