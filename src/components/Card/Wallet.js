@@ -1,9 +1,9 @@
-import { View, StyleSheet, Text, TouchableOpacity, Modal } from 'react-native';
-import React, { Component } from 'react';
-import { Ionicons } from '@expo/vector-icons';
-import Colors from '../../outils/Colors';
-import ModalAddWallet from './ModalAddWallet';
-import ModalEditWallet from './ModalEditWallet';
+import { View, StyleSheet, Text, TouchableOpacity, Modal } from "react-native";
+import React, { Component } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import Colors from "../../outils/Colors";
+import ModalAddWallet from "./ModalAddWallet";
+import ModalEditWallet from "./ModalEditWallet";
 
 export default class Wallet extends Component {
   state = {
@@ -42,14 +42,14 @@ export default class Wallet extends Component {
           <View style={styles.walletInfo}>
             <View style={styles.walletText}>
               <Text style={styles.walletTitle}>Wallet</Text>
-              <Text style={styles.balance}>{showMonney ? '0,00' : '***'}</Text>
+              <Text style={styles.balance}>{showMonney ? "0,00" : "***"}</Text>
             </View>
             <TouchableOpacity
               style={styles.iconWrapper}
               onPress={this.toggleMonneyVisibility}
             >
               <Ionicons
-                name={showMonney ? 'eye' : 'eye-off'}
+                name={showMonney ? "eye" : "eye-off"}
                 size={30}
                 color={Colors.BleuFoncé}
               />
@@ -67,7 +67,10 @@ export default class Wallet extends Component {
               <Text style={styles.buttonText}>Add</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={this.openEditModal}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={this.openEditModal}
+            >
               <Ionicons
                 name="create-outline"
                 size={24}
@@ -86,10 +89,10 @@ export default class Wallet extends Component {
           transparent={true}
           onRequestClose={this.closeAddModal}
         >
-            <ModalAddWallet 
-                modalVisible={isAddModalVisible}
-                closeAddModal={this.closeAddModal}
-             />
+          <ModalAddWallet
+            modalVisible={isAddModalVisible}
+            closeAddModal={this.closeAddModal}
+          />
         </Modal>
 
         {/* Edit Wallet Modal */}
@@ -99,10 +102,10 @@ export default class Wallet extends Component {
           transparent={true}
           onRequestClose={this.closeEditModal}
         >
-            <ModalEditWallet 
-                modalVisible={isEditModalVisible}
-                closeEditModal={this.closeEditModal}
-            />
+          <ModalEditWallet
+            modalVisible={isEditModalVisible}
+            closeEditModal={this.closeEditModal}
+          />
         </Modal>
       </View>
     );
@@ -112,34 +115,34 @@ export default class Wallet extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
     top: 17,
   },
   monney: {
     padding: 20,
-    width: '85%',
-    height: '30%',
+    width: "85%",
+    height: "30%",
     backgroundColor: Colors.white,
     borderRadius: 15,
     paddingHorizontal: 20,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 3,
   },
   walletInfo: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 20,
   },
   walletText: {
-    flexDirection: 'column',
+    flexDirection: "column",
   },
   walletTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.BleuFoncé,
   },
   iconWrapper: {
@@ -149,19 +152,20 @@ const styles = StyleSheet.create({
   },
   balance: {
     fontSize: 32,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.BleuFoncé,
     marginTop: 10,
   },
   buttonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+    paddingBottom: 25,
   },
   button: {
-    width: '42%',
-    flexDirection: 'row',
-    alignItems: 'center',
+    width: "42%",
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: Colors.JauneFoncé,
     padding: 10,
     borderRadius: 10,
