@@ -11,9 +11,34 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import AddCategory from "./AddCategory";
 import Colors from "../../outils/Colors";
+import ModalDeleteCategory from "./ModalDeleteCategory";
+import ModalEditCategory from "./ModalEditCategory";
 
 export default class ExpenseCategory extends Component {
+  state = {
+    modalDeleteVisible: false,
+    modalEditVisible: false,
+  };
+
+  openFormModalDelete = () => {
+    this.setState({ modalDeleteVisible: true });
+  };
+
+  closeFormModalDelete = () => {
+    this.setState({ modalDeleteVisible: false });
+  };
+
+  openFormModalEdit = () => {
+    this.setState({ modalEditVisible: true });
+  };
+
+  closeFormModalEdit = () => {
+    this.setState({ modalEditVisible: false });
+  };
+
   render() {
+    const { modalDeleteVisible, modalEditVisible } = this.state;
+
     return (
       <View style={styles.container}>
         <AddCategory />
@@ -34,15 +59,27 @@ export default class ExpenseCategory extends Component {
             </View>
 
             <View style={styles.actions}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.openFormModalEdit}>
                 <MaterialIcons name="edit" size={25} color={Colors.BleuFoncé} />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.openFormModalDelete}>
                 <Icon name="trash" size={25} color={Colors.Rouge} />
               </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
+
+        {/*Modal Delete */}
+        <ModalDeleteCategory
+          modalVisible={modalDeleteVisible}
+          onCloseModal={this.closeFormModalDelete}
+        />
+
+        {/*Modal Edit */}
+        <ModalEditCategory
+          modalVisible={modalEditVisible}
+          onCloseModal={this.closeFormModalEdit}
+        />
       </View>
     );
   }
@@ -55,8 +92,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   scrollContainer: {
-    flexGrow: 1, // Assure que la ScrollView occupe tout l'espace nécessaire
-    alignItems: "center", // Centrer horizontalement
+    flexGrow: 1,
+    alignItems: "center",
   },
   list: {
     width: "90%",
