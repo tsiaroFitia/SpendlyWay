@@ -1,99 +1,172 @@
-import React from "react";
-import { View, Text, TouchableOpacity, Modal, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Modal,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 import Colors from "../../outils/Colors";
+import { supabase } from "../../services/supabase";
 
-function ModalDeleteCategory({ modalVisible, onCloseModal, handleDelete }) {
+const ModalDeleteCategory = ({
+  modalVisible,
+  onCloseModal,
+  categoryId,
+  onDeleteSuccess,
+}) => {
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDelete = async () => {
+    if (!categoryId) return;
+
+    setIsDeleting(true);
+
+    try {
+      // 1. D'abord vérifier si la catégorie est utilisée dans des transactions
+      const { count } = await supabase
+        .from("transactions")
+        .select("*", { count: "exact" })
+        .eq("category_id", categoryId);
+
+      if (count > 0) {
+        Alert.alert(
+          "Impossible de supprimer",
+          "Cette catégorie est utilisée dans des transactions. Modifiez ou supprimez d'abord les transactions associées."
+        );
+        return;
+      }
+
+      // 2. Supprimer la catégorie
+      const { error } = await supabase
+        .from("categories")
+        .delete()
+        .eq("id", categoryId);
+
+      if (error) throw error;
+
+      onDeleteSuccess();
+      onCloseModal();
+    } catch (error) {
+      console.error("Delete error:", error);
+      Alert.alert("Erreur", "La suppression a échoué");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   return (
-    <Modal transparent={true} visible={modalVisible} animationType="fade">
+    <Modal transparent visible={modalVisible} animationType="fade">
       <View style={styles.overlay}>
         <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>Delete Category</Text>
-          <View style={styles.tsipika}>
-            <Text>ttttt</Text>
-          </View>
-          <Text style={styles.ask}>
-            Do you really want to delete this item ?
+          <Text style={styles.modalTitle}>Supprimer la catégorie</Text>
+
+          <View style={styles.separator} />
+
+          <Text style={styles.confirmationText}>
+            Êtes-vous sûr de vouloir supprimer cette catégorie ?
           </Text>
-          {/* Buttons */}
+          <Text style={styles.warningText}>Cette action est irréversible.</Text>
+
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              style={styles.cancelButton}
+              style={[styles.button, styles.cancelButton]}
               onPress={onCloseModal}
+              disabled={isDeleting}
             >
-              <Text style={styles.buttonText1}>Cancel</Text>
+              <Text style={styles.cancelButtonText}>Annuler</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handleDelete}>
-              <Text style={styles.buttonText}>Delete</Text>
+
+            <TouchableOpacity
+              style={[styles.button, styles.deleteButton]}
+              onPress={handleDelete}
+              disabled={isDeleting}
+            >
+              {isDeleting ? (
+                <ActivityIndicator color={Colors.white} />
+              ) : (
+                <Text style={styles.deleteButtonText}>Supprimer</Text>
+              )}
             </TouchableOpacity>
           </View>
         </View>
       </View>
     </Modal>
   );
-}
-
-export default ModalDeleteCategory;
+};
 
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: Colors.BackGroundModal,
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
   modalContainer: {
-    width: "80%",
-    padding: 20,
+    width: "85%",
     backgroundColor: Colors.white,
-    borderRadius: 10,
+    borderRadius: 12,
+    padding: 20,
     alignItems: "center",
   },
   modalTitle: {
-    fontSize: 22,
-    marginBottom: 20,
+    fontSize: 20,
     fontWeight: "bold",
     color: Colors.BleuFoncé,
+    marginBottom: 15,
   },
-  tsipika: {
-    height: 0.5,
-    width: "90%",
-    backgroundColor: Colors.BleuFoncé,
-    marginBottom: 20,
+  separator: {
+    height: 1,
+    width: "100%",
+    backgroundColor: Colors.GrisClair,
+    marginVertical: 10,
   },
-  ask: {
+  confirmationText: {
     fontSize: 16,
     textAlign: "center",
-    marginBottom: 20,
-    fontWeight: "bold",
     color: Colors.BleuFoncé,
-    paddingBottom: 5,
+    marginBottom: 5,
+  },
+  warningText: {
+    fontSize: 14,
+    textAlign: "center",
+    color: Colors.Rouge,
+    marginBottom: 20,
+    fontStyle: "italic",
   },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
+    marginTop: 10,
   },
   button: {
-    backgroundColor: Colors.JauneFoncé,
-    padding: 10,
-    borderRadius: 5,
-    width: "45%",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    minWidth: "45%",
   },
   cancelButton: {
-    borderColor: Colors.JauneFoncé,
+    backgroundColor: Colors.white,
     borderWidth: 1,
-    padding: 10,
-    borderRadius: 5,
-    width: "45%",
+    borderColor: Colors.JauneFoncé,
   },
-  buttonText1: {
+  deleteButton: {
+    backgroundColor: Colors.Rouge,
+  },
+  cancelButtonText: {
     color: Colors.JauneFoncé,
-    textAlign: "center",
     fontSize: 16,
+    fontWeight: "500",
   },
-  buttonText: {
+  deleteButtonText: {
     color: Colors.white,
-    textAlign: "center",
     fontSize: 16,
+    fontWeight: "500",
   },
 });
+
+export default ModalDeleteCategory;

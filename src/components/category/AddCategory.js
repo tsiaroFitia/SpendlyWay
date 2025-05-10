@@ -36,8 +36,14 @@ export default class AddCategory extends Component {
 
         {/* ModalAddCategory */}
         <ModalAddCategory
-          modalVisible={modalVisible}
-          onCloseModal={this.closeFormModal}
+          modalVisible={this.state.showAddCategory}
+          onCloseModal={() => this.setState({ showAddCategory: false })}
+          onAddCategory={(newCategory) => {
+            this.setState((prev) => ({
+              categories: [...prev.categories, newCategory],
+              showAddCategory: false,
+            }));
+          }}
         />
       </View>
     );

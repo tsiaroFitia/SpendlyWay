@@ -1,83 +1,142 @@
-import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Modal, StyleSheet } from 'react-native';
-import { SimpleLineIcons } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import Colors from '../../outils/Colors';
-import Icone from './ImportIcone/Icone';
+import React, { Component } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Modal,
+  StyleSheet,
+  Alert,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import Colors from "../../outils/Colors";
+import Icone from "./ImportIcone/Icone";
+import { supabase } from "../../services/supabase";
 
 export default class ModalAddCategory extends Component {
   state = {
     iconModalVisible: false,
-    name: '',
-    selectedIcon: '',
+    name: "",
+    selectedIcon: "pricetag-outline", // Icône par défaut
+    isLoading: false,
   };
 
-  openIconModal = () => {
-    this.setState({ iconModalVisible: true });
-  };
-
-  closeIconModal = () => {
-    this.setState({ iconModalVisible: false });
-  };
+  openIconModal = () => this.setState({ iconModalVisible: true });
+  closeIconModal = () => this.setState({ iconModalVisible: false });
 
   handleIconSelect = (iconName) => {
     this.setState({ selectedIcon: iconName });
     this.closeIconModal();
   };
 
-  saveData = () => {
+  handleAddCategory = async () => {
     const { name, selectedIcon } = this.state;
-    console.log('Category Name:', name);
-    console.log('Selected Icon:', selectedIcon);
-    this.props.onCloseModal();
+
+    if (!name.trim()) {
+      Alert.alert("Erreur", "Veuillez entrer un nom pour la catégorie");
+      return;
+    }
+
+    this.setState({ isLoading: true });
+
+    try {
+      const { data, error } = await supabase
+        .from("categories")
+        .insert([
+          {
+            name: name.trim(),
+            icon: selectedIcon,
+          },
+        ])
+        .select();
+
+      if (error) throw error;
+
+      this.props.onAddCategory(data[0]);
+      this.props.onCloseModal();
+    } catch (error) {
+      console.error("Error adding category:", error);
+      Alert.alert("Erreur", error.message);
+    } finally {
+      this.setState({ isLoading: false });
+    }
   };
 
   render() {
     const { modalVisible, onCloseModal } = this.props;
-    const { iconModalVisible, name, selectedIcon } = this.state;
+    const { iconModalVisible, name, selectedIcon, isLoading } = this.state;
 
     return (
-      <Modal transparent={true} visible={modalVisible} animationType="fade">
+      <Modal transparent visible={modalVisible} animationType="fade">
         <View style={styles.overlay}>
           <View style={styles.modalContainer}>
-            <Text style={styles.modalTitle}>Add a New Category</Text>
+            <Text style={styles.modalTitle}>Ajouter une catégorie</Text>
 
-            {/* Name Input */}
+            {/* Nom de la catégorie */}
             <View style={styles.inputContainer}>
-              <Ionicons name="pricetag-outline" size={25} color={Colors.BleuFoncé} style={{left:5,}}/>
+              <Ionicons
+                name="pricetag-outline"
+                size={25}
+                color={Colors.BleuFoncé}
+                style={styles.icon}
+              />
               <TextInput
                 style={styles.input}
-                placeholder="Enter Name"
+                placeholder="Nom de la catégorie"
                 value={name}
                 onChangeText={(text) => this.setState({ name: text })}
+                maxLength={30}
               />
             </View>
 
-            {/* Select Icon Button */}
-            <TouchableOpacity style={styles.iconSelectButton} onPress={this.openIconModal}>
-                {selectedIcon ? 
-                    <Ionicons name={`${selectedIcon}`} size={25} color={Colors.BleuFoncé} style={{left: 5}} /> 
-                    : 
-                    <SimpleLineIcons name='emotsmile' size={25} color={Colors.BleuFoncé} style={{left: 5}} />
-                }
-                <Text style={styles.iconSelectText}>Choose an Icon</Text>
+            {/* Sélection d'icône */}
+            <TouchableOpacity
+              style={styles.iconSelectButton}
+              onPress={this.openIconModal}
+            >
+              <Ionicons
+                name={selectedIcon}
+                size={25}
+                color={Colors.BleuFoncé}
+                style={styles.icon}
+              />
+              <Text style={styles.iconSelectText}>Choisir une icône</Text>
             </TouchableOpacity>
 
- 
-            {/* Buttons */}
+            {/* Boutons */}
             <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.cancelButton} onPress={onCloseModal}>
-                <Text style={styles.buttonText1}>Cancel</Text>
+              <TouchableOpacity
+                style={styles.cancelButton}
+                onPress={onCloseModal}
+                disabled={isLoading}
+              >
+                <Text style={styles.buttonText1}>Annuler</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={this.saveData}>
-                <Text style={styles.buttonText}>Add</Text>
+
+              <TouchableOpacity
+                style={[styles.button, isLoading && styles.disabledButton]}
+                onPress={this.handleAddCategory}
+                disabled={isLoading}
+              >
+                <Text style={styles.buttonText}>
+                  {isLoading ? "Ajout..." : "Ajouter"}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
 
-          {/* Icon Selection Modal */}
-          <Modal transparent={true} visible={iconModalVisible} animationType="slide" onRequestClose={this.closeIconModal}>
-            <Icone closeIconeModal={this.closeIconModal} handleIconSelect={this.handleIconSelect} />
+          {/* Modal de sélection d'icône */}
+          <Modal
+            transparent
+            visible={iconModalVisible}
+            animationType="slide"
+            onRequestClose={this.closeIconModal}
+          >
+            <Icone
+              closeIconeModal={this.closeIconModal}
+              handleIconSelect={this.handleIconSelect}
+              currentIcon={selectedIcon}
+            />
           </Modal>
         </View>
       </Modal>
@@ -88,82 +147,87 @@ export default class ModalAddCategory extends Component {
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.BackGroundModal,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
   modalContainer: {
-    width: '80%',
+    width: "85%",
     padding: 20,
     backgroundColor: Colors.white,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
   modalTitle: {
-    fontSize: 18,
+    fontSize: 20,
     marginBottom: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: Colors.BleuFoncé,
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
-    borderColor: Colors.BleuFoncé,
-    borderRadius: 5,
-    padding: 8,
+    borderColor: Colors.BleuClair,
+    borderRadius: 8,
+    padding: 10,
     marginBottom: 20,
-    width: '100%',
+    width: "100%",
+  },
+  icon: {
+    marginLeft: 5,
+    marginRight: 15,
   },
   input: {
     flex: 1,
-    paddingLeft: 10,
     fontSize: 16,
-    left:10,
   },
   iconSelectButton: {
-    flexDirection: 'row',  
-    alignItems: 'center',  
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
-    borderColor: Colors.BleuFoncé,
-    borderRadius: 5,
-    padding: 10,
-    width: '100%',
+    borderColor: Colors.BleuClair,
+    borderRadius: 8,
+    padding: 12,
+    width: "100%",
     marginBottom: 20,
-    height: 55,
   },
   iconSelectText: {
     color: Colors.BleuFoncé,
-    marginLeft: 22, 
-    fontSize: 16, 
+    fontSize: 16,
+    marginLeft: 10,
   },
-  
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
   },
   button: {
     backgroundColor: Colors.JauneFoncé,
-    padding: 10,
-    borderRadius: 5,
-    width: '45%',
+    padding: 12,
+    borderRadius: 8,
+    width: "48%",
+    alignItems: "center",
   },
   cancelButton: {
-    borderColor: Colors.JauneFoncé,
     borderWidth: 1,
-    padding: 10,
-    borderRadius: 5,
-    width: '45%',
+    borderColor: Colors.JauneFoncé,
+    padding: 12,
+    borderRadius: 8,
+    width: "48%",
+    alignItems: "center",
   },
   buttonText1: {
     color: Colors.JauneFoncé,
-    textAlign: 'center',
     fontSize: 16,
+    fontWeight: "500",
   },
   buttonText: {
     color: Colors.white,
-    textAlign: 'center',
     fontSize: 16,
+    fontWeight: "500",
+  },
+  disabledButton: {
+    opacity: 0.6,
   },
 });

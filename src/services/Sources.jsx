@@ -5,7 +5,7 @@ export const SourceService = {
     const { data, error } = await supabase
       .from("sources")
       .select("*")
-      .eq("user_id", userId); // Adaptez selon votre schéma
+      .eq("user_id", userId);
 
     if (error) throw error;
     return data;
