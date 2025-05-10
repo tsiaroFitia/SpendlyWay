@@ -18,20 +18,47 @@ export default class ModalAddTransaction extends Component {
     category: "",
     date: "",
     description: "",
-    transactionType: "revenue", // Par défaut, c'est un revenu
+    transactionType: "revenue",
     showCalendar: false,
   };
 
-  handleAddTransaction = () => {
-    const { description, amount, transactionType, category, date } = this.state;
-    if (description && amount && category && date) {
-      this.props.onAddTransaction({
-        description,
-        amount,
-        transactionType,
-        category,
-        date,
-      });
+  handleAddTransaction = async () => {
+    const {
+      description,
+      amount,
+      transactionType,
+      selectedCategory,
+      selectedSource,
+      date,
+    } = this.state;
+
+    if (!description || !amount || !selectedCategory || !date) {
+      alert("Please fill all required fields");
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from("transactions")
+        .insert([
+          {
+            amount: parseFloat(amount),
+            description,
+            date,
+            type: transactionType,
+            category_id: selectedCategory.id,
+            source_id: selectedSource?.id || null,
+          },
+        ])
+        .select();
+
+      if (error) throw error;
+
+      this.props.onAddTransaction(data[0]);
+      this.props.onClose();
+    } catch (error) {
+      console.error("Error adding transaction:", error);
+      alert("Error: " + error.message);
     }
   };
 

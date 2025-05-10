@@ -22,7 +22,6 @@ const RepportScreen = () => {
       <View style={styles.tabBarContainer}>
         <Tab.Navigator
           screenOptions={({ route }) => ({
-            // On supprime tabBarIcon ici
             tabBarLabel: ({ focused }) => {
               const label =
                 route.name === "IncomeReport" ? "Income" : "Expense";
